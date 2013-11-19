@@ -1,4 +1,4 @@
-From c7f7a43ab429da21c8dc9f8544b44a6407e37e5a Mon Sep 17 00:00:00 2001
+From eab7e0fd0c6c57f445ab75fa154d9eb482a80aa2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
 Date: Fri, 13 Apr 2012 17:24:40 +0100
 Subject: [PATCH] use parallel installed versions in RHEL6
@@ -11,7 +11,7 @@ Change-Id: I290f56eae61c87893639a9e5d29f7fff760452cf
  1 files changed, 31 insertions(+), 0 deletions(-)
 
 diff --git a/neutron/__init__.py b/neutron/__init__.py
-index b2c81bd..8f09807 100644
+index b2c81bd..fef4d32 100644
 --- a/neutron/__init__.py
 +++ b/neutron/__init__.py
 @@ -15,6 +15,37 @@
@@ -37,7 +37,7 @@ index b2c81bd..8f09807 100644
 +            # and the associated pkg_resources.working_set.entries
 +            return pkg_resources.require(requirement)
 +
-+replace_dist("WebOb >= 1.0")
++replace_dist("WebOb >= 1.2")
 +replace_dist("SQLAlchemy >= 0.6.3")
 +replace_dist("Routes >= 1.12.3")
 +replace_dist("Jinja2 >= 2.6")

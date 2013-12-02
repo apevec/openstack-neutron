@@ -5,7 +5,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	9%{?dist}
+Release:	10%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -999,6 +999,9 @@ fi
 
 
 %changelog
+* Mon Dec 02 2013 Terry Wilson <twilson@redhat.com> - 2013.2-10
+- Replace quantum references in neutron-dist.conf
+
 * Tue Nov 19 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2-9
 - Fix dependency on parallel installed python-jinja2-26
 

@@ -52,7 +52,7 @@ Source42:	neutron-metering-agent.upstart
 
 Source90:	neutron-dist.conf
 #
-# patches_base=2013.2
+# patches_base=2013.2+1
 #
 Patch0001: 0001-use-parallel-installed-versions-in-RHEL6.patch
 

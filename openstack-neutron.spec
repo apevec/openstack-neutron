@@ -5,7 +5,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	11%{?dist}
+Release:	12%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -1006,6 +1006,9 @@ fi
 
 
 %changelog
+* Mon Dec 09 2013 Terry Wilson <twilson@redhat.com> - 2013.2-12
+- Add vpnaas/fwaas configs to init scripts, bz#1032450
+
 * Wed Dec 04 2013 Terry Wilson <twilson@redhat.com> - 2013.2-11
 - Add missing debug and vpnaas rootwrap filters, bz#1034207
 

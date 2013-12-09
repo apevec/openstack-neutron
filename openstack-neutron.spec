@@ -56,6 +56,7 @@ Source90:	neutron-dist.conf
 #
 Patch0001: 0001-use-parallel-installed-versions-in-RHEL6.patch
 Patch0002: 0002-Add-vpnaas-and-debug-filters-to-setup.cfg.patch
+Patch0003: 0003-Add-fwaas_driver.ini-to-setup.cfg.patch
 
 BuildArch:	noarch
 
@@ -423,6 +424,7 @@ IPSec.
 
 %patch0001 -p1
 %patch0002 -p1
+%patch0003 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 

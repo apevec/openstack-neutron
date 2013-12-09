@@ -16,6 +16,7 @@ configs=(
     "/usr/share/$proj/$proj-dist.conf" \
     "/etc/$proj/$proj.conf" \
     "/etc/$proj/l3_agent.ini" \
+    "/etc/$proj/fwaas_driver.ini" \
 )
 pidfile="/var/run/$proj/$prog.pid"
 

@@ -16,6 +16,7 @@ configs=(
     "/usr/share/$proj/$proj-dist.conf" \
     "/etc/$proj/$proj.conf" \
     "/etc/$proj/vpn_agent.ini" \
+    "/etc/$proj/l3_agent.ini" \
 )
 pidfile="/var/run/$proj/$prog.pid"
 

@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -1004,6 +1004,9 @@ fi
 
 
 %changelog
+* Fri Dec 27 2013 Terry Wilson <twilson@redhat.com> - 2013.2.1-2
+- Add rootwrap.conf limitation to sudoers.d/neutron, bz#1039528
+
 * Wed Dec 18 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2.1-1
 - Update to Havana stable release 2013.2.1
 

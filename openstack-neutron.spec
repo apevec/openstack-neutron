@@ -5,7 +5,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	12%{?dist}
+Release:	13%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -57,6 +57,8 @@ Source90:	neutron-dist.conf
 Patch0001: 0001-use-parallel-installed-versions-in-RHEL6.patch
 Patch0002: 0002-Add-vpnaas-and-debug-filters-to-setup.cfg.patch
 Patch0003: 0003-Add-fwaas_driver.ini-to-setup.cfg.patch
+Patch0004: 0004-Sync-rpc-fix-from-oslo-incubator.patch
+Patch0005: 0005-Remove-dnsmasq-version-warning.patch
 
 BuildArch:	noarch
 
@@ -425,6 +427,8 @@ IPSec.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
+%patch0004 -p1
+%patch0005 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -1006,8 +1010,13 @@ fi
 
 
 %changelog
+* Fri Dec 13 2013 Terry Wilson <twilson@redhat.com> - 2013.2-13
+- QPID fixes from oslo-incubator, bz#1038711, bz#1038717
+- Remove dnsmasq version warning, bz#997961
+
 * Mon Dec 09 2013 Terry Wilson <twilson@redhat.com> - 2013.2-12
 - Add vpnaas/fwaas configs to init scripts, bz#1032450
+- Pass neutron rootwrap.conf in sudoers.d/neutron, bz#984097
 
 * Wed Dec 04 2013 Terry Wilson <twilson@redhat.com> - 2013.2-11
 - Add missing debug and vpnaas rootwrap filters, bz#1034207

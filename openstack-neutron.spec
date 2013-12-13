@@ -583,6 +583,7 @@ if rpm --quiet -q openstack-quantum; then
       sed -re 's/[0-6]:off//g
                s/([0-6]):on\s*/\1/g
                s/quantum/neutron/g
+               s/^([a-z0-9-]+)\s+$/chkconfig \1 off/
                s/^([a-z0-9-]+)\s+([0-6]+)/chkconfig --levels \2 \1 on/' > %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM
 fi
 
@@ -1013,6 +1014,7 @@ fi
 * Fri Dec 13 2013 Terry Wilson <twilson@redhat.com> - 2013.2-13
 - QPID fixes from oslo-incubator, bz#1038711, bz#1038717
 - Remove dnsmasq version warning, bz#997961
+- Ensure that disabled services are properly handled on upgrade, bz#1040704
 
 * Mon Dec 09 2013 Terry Wilson <twilson@redhat.com> - 2013.2-12
 - Add vpnaas/fwaas configs to init scripts, bz#1032450

@@ -1,11 +1,8 @@
-#
-# This is 2013.2 release
-#
 %global release_name havana
 
 Name:		openstack-neutron
-Version:	2013.2
-Release:	13%{?dist}
+Version:	2013.2.1
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -52,13 +49,11 @@ Source42:	neutron-metering-agent.upstart
 
 Source90:	neutron-dist.conf
 #
-# patches_base=2013.2+1
+# patches_base=2013.2.1+1
 #
 Patch0001: 0001-use-parallel-installed-versions-in-RHEL6.patch
-Patch0002: 0002-Add-vpnaas-and-debug-filters-to-setup.cfg.patch
-Patch0003: 0003-Add-fwaas_driver.ini-to-setup.cfg.patch
-Patch0004: 0004-Sync-rpc-fix-from-oslo-incubator.patch
-Patch0005: 0005-Remove-dnsmasq-version-warning.patch
+Patch0002: 0002-Add-fwaas_driver.ini-to-setup.cfg.patch
+Patch0003: 0003-Remove-dnsmasq-version-warning.patch
 
 BuildArch:	noarch
 
@@ -427,8 +422,6 @@ IPSec.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -1011,6 +1004,9 @@ fi
 
 
 %changelog
+* Wed Dec 18 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2.1-1
+- Update to Havana stable release 2013.2.1
+
 * Fri Dec 13 2013 Terry Wilson <twilson@redhat.com> - 2013.2-13
 - QPID fixes from oslo-incubator, bz#1038711, bz#1038717
 - Remove dnsmasq version warning, bz#997961

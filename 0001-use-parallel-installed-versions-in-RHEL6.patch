@@ -1,4 +1,4 @@
-From 9e51bf76149105791742f84a4a639f9a0f661aad Mon Sep 17 00:00:00 2001
+From 9e612000969a4d41925e554232604f8c44781f99 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
 Date: Fri, 13 Apr 2012 17:24:40 +0100
 Subject: [PATCH] use parallel installed versions in RHEL6
@@ -7,8 +7,8 @@ of webob sqlalchemy python-routes paste-deploy python-jinja2-26
 
 Change-Id: I290f56eae61c87893639a9e5d29f7fff760452cf
 ---
- neutron/__init__.py | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ neutron/__init__.py |   31 +++++++++++++++++++++++++++++++
+ 1 files changed, 31 insertions(+), 0 deletions(-)
 
 diff --git a/neutron/__init__.py b/neutron/__init__.py
 index b2c81bd..fef4d32 100644

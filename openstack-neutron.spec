@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -309,6 +309,7 @@ Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.3.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	openvswitch
+Requires:	python-psutil
 
 
 %description -n openstack-neutron-openvswitch
@@ -1004,6 +1005,9 @@ fi
 
 
 %changelog
+* Tue Jan 07 2014 Terry Wilson <twilson@redhat.com> - 2013-2.1-3
+- Add python-psutil requirement for openvswitch agent, bz#1049235
+
 * Fri Dec 27 2013 Terry Wilson <twilson@redhat.com> - 2013.2.1-2
 - Add rootwrap.conf limitation to sudoers.d/neutron, bz#1039528
 

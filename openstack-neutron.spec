@@ -309,7 +309,6 @@ Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.3.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	openvswitch
-Requires:	python-psutil
 
 
 %description -n openstack-neutron-openvswitch

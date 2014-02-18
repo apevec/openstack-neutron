@@ -1,14 +1,14 @@
-From e026f39d15cc1799762abb9324b82b317b87bd46 Mon Sep 17 00:00:00 2001
+From 811132aec0dcf44a4ccaef4f174567788f476ac0 Mon Sep 17 00:00:00 2001
 From: Terry Wilson <twilson@redhat.com>
 Date: Fri, 13 Dec 2013 09:41:43 -0600
 Subject: [PATCH] Remove dnsmasq version warning
 
 ---
- neutron/agent/linux/dhcp.py |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+ neutron/agent/linux/dhcp.py | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/neutron/agent/linux/dhcp.py b/neutron/agent/linux/dhcp.py
-index 9e7481d..fbfb852 100644
+index 7d25bcf..98fd3db 100644
 --- a/neutron/agent/linux/dhcp.py
 +++ b/neutron/agent/linux/dhcp.py
 @@ -277,10 +277,13 @@ class Dnsmasq(DhcpLocalProcess):

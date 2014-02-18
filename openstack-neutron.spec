@@ -52,8 +52,7 @@ Source90:	neutron-dist.conf
 # patches_base=2013.2.2+1
 #
 Patch0001: 0001-use-parallel-installed-versions-in-RHEL6.patch
-Patch0002: 0002-Add-fwaas_driver.ini-to-setup.cfg.patch
-Patch0003: 0003-Remove-dnsmasq-version-warning.patch
+Patch0002: 0002-Remove-dnsmasq-version-warning.patch
 
 BuildArch:	noarch
 
@@ -421,7 +420,6 @@ IPSec.
 
 %patch0001 -p1
 %patch0002 -p1
-%patch0003 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 

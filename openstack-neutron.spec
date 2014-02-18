@@ -1,8 +1,8 @@
 %global release_name havana
 
 Name:		openstack-neutron
-Version:	2013.2.1
-Release:	3%{?dist}
+Version:	2013.2.2
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -49,7 +49,7 @@ Source42:	neutron-metering-agent.upstart
 
 Source90:	neutron-dist.conf
 #
-# patches_base=2013.2.1+1
+# patches_base=2013.2.2+1
 #
 Patch0001: 0001-use-parallel-installed-versions-in-RHEL6.patch
 Patch0002: 0002-Add-fwaas_driver.ini-to-setup.cfg.patch
@@ -126,7 +126,7 @@ Requires:	python-webob1.2
 Requires:	python-netaddr
 Requires:	python-oslo-config >= 1:1.2.0
 Requires:	python-qpid
-Requires:	python-neutronclient
+Requires:	python-neutronclient >= 2.3.1-3
 Requires:	sudo
 
 %description -n python-neutron
@@ -424,6 +424,10 @@ IPSec.
 %patch0003 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
+
+# Ensure SOURCES.txt ends in a newline and if any patches have added files, append them to SOURCES.txt
+[ -n "$(tail -c 1 < neutron.egg-info/SOURCES.txt)" ] && echo >> neutron.egg-info/SOURCES.txt
+awk '/^new file/ {split(a,files," ");print substr(files[3],3)} {a = $0}' %{_sourcedir}/*.patch >> neutron.egg-info/SOURCES.txt
 
 chmod 644 neutron/plugins/cisco/README
 

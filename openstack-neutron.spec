@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -125,7 +125,7 @@ Requires:	python-webob1.2
 Requires:	python-netaddr
 Requires:	python-oslo-config >= 1:1.2.0
 Requires:	python-qpid
-Requires:	python-neutronclient >= 2.3.1-3
+Requires:	python-neutronclient >= 2.3.0
 Requires:	sudo
 
 %description -n python-neutron
@@ -425,7 +425,9 @@ find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 # Ensure SOURCES.txt ends in a newline and if any patches have added files, append them to SOURCES.txt
 [ -n "$(tail -c 1 < neutron.egg-info/SOURCES.txt)" ] && echo >> neutron.egg-info/SOURCES.txt
+if ls %{_sourcedir}/*.patch >/dev/null 2>&1; then
 awk '/^new file/ {split(a,files," ");print substr(files[3],3)} {a = $0}' %{_sourcedir}/*.patch >> neutron.egg-info/SOURCES.txt
+fi
 
 chmod 644 neutron/plugins/cisco/README
 
@@ -1006,6 +1008,9 @@ fi
 
 
 %changelog
+* Wed Feb 19 2014 Miguel Angel Ajo <majopela@redhat.com> - 2013.2.2-2
+- Update to Havana stable release 2013.2.2
+
 * Tue Jan 07 2014 Terry Wilson <twilson@redhat.com> - 2013-2.1-3
 - Add python-psutil requirement for openvswitch agent, bz#1049235
 

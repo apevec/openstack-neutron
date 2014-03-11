@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# This script checks to make sure the database used by Neutron is at the
+# correct version.  If the database is not at $NEUTRON_EXPECTED_DB_VERSION, as
+# set in /etc/sysconfig/openstack-neutron, log an error and exit with an error
+# code.
+#
+# This script is meant to be called from an init script or via ExecPreStart in
+# a systemd unit.
+
+RETCODE=0
+
+[ -f /etc/sysconfig/openstack-neutron ] && . /etc/sysconfig/openstack-neutron
+
+[ "$NEUTRON_EXPECTED_DB_VERSION" ] || exit 0
+
+neutron_db_version=$(
+        neutron-db-manage \
+            --config-file /etc/neutron/neutron.conf \
+            --config-file /etc/neutron/plugin.ini current 2>/dev/null |
+        awk '{print $NF}')
+
+if [ "x$neutron_db_version" = "x" ]; then
+    logger -s -p daemon.error -t neutron-db-check \
+        "ERROR: unable to find version information for the neutron database."\
+        "Check your logs for additional information."
+    RETCODE=1
+elif [ "x$neutron_db_version" = "xNone" ]; then
+    logger -s -p daemon.error -t neutron-db-check \
+        "ERROR: neutron database does not have version information."\
+        "You must run the \"neutron-db-manage stamp\" command before"\
+        "starting neutron services."
+    RETCODE=1
+elif [ "x$neutron_db_version" != "x$NEUTRON_EXPECTED_DB_VERSION" ]; then
+    logger -s -p daemon.error -t neutron-db-check \
+        "ERROR: you must upgrade the neutron database before starting"\
+        "neutron services."
+    RETCODE=1
+fi
+
+exit $RETCODE

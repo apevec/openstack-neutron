@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -47,6 +47,9 @@ Source41:	neutron-vpn-agent.upstart
 Source32:	neutron-metering-agent.init
 Source42:	neutron-metering-agent.upstart
 
+Source50:   neutron-db-check
+Source51:   openstack-neutron.sysconfig
+
 Source90:	neutron-dist.conf
 #
 # patches_base=2013.2.2+1
@@ -65,7 +68,7 @@ BuildRequires:	python-sqlalchemy0.7
 BuildRequires:	python-webob1.2
 BuildRequires:	python-paste-deploy1.5
 BuildRequires:	python-routes1.12
-BuildRequires:  python-jinja2-26
+BuildRequires:	python-jinja2-26
 BuildRequires:	dos2unix
 BuildRequires:	python-pbr
 BuildRequires:	python-d2to1
@@ -525,6 +528,12 @@ install -p -m 644 %{SOURCE42} %{buildroot}%{_datadir}/neutron/
 # Install dist conf
 install -p -D -m 640 %{SOURCE90} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
 
+# Install neutron-db-check
+install -m 755 %{SOURCE50} %{buildroot}%{_bindir}/neutron-db-check
+install -d -m 755 %{buildroot}%{_sysconfdir}/sysconfig
+install -m 644 %{SOURCE51} %{buildroot}%{_sysconfdir}/sysconfig/openstack-neutron
+
+
 # Install version info file
 cat > %{buildroot}%{_sysconfdir}/neutron/release <<EOF
 [Neutron]
@@ -603,8 +612,10 @@ if [ -e %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM ];then
         ln -s ${plugin_ini//quantum/neutron} %{_sysconfdir}/neutron/plugin.ini
     fi
 
-    # Stamp the existing db as grizzly to avoid neutron-server breaking db migration
-    neutron-db-manage --config-file %{_sysconfdir}/neutron/neutron.conf --config-file %{_sysconfdir}/neutron/plugin.ini stamp grizzly || :
+    # Stamp the existing db as grizzly to avoid neutron-server breaking db
+    # migration after upgrade
+    neutron-db-manage --config-file %{_sysconfdir}/neutron/neutron.conf \
+        --config-file %{_sysconfdir}/neutron/plugin.ini stamp grizzly || :
 
     # Restore the enablement of the various neutron services
     source %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM
@@ -787,6 +798,8 @@ fi
 %{_bindir}/neutron-server-setup
 %{_bindir}/neutron-usage-audit
 
+%{_bindir}/neutron-db-check
+
 %{_initrddir}/neutron-server
 %{_initrddir}/neutron-dhcp-agent
 %{_initrddir}/neutron-l3-agent
@@ -811,6 +824,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/policy.json
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/neutron.conf
 %config(noreplace) %{_sysconfdir}/neutron/rootwrap.conf
+%config %{_sysconfdir}/sysconfig/openstack-neutron
 %dir %{_sysconfdir}/neutron/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
 %config(noreplace) %{_sysconfdir}/sudoers.d/neutron
@@ -1008,6 +1022,9 @@ fi
 
 
 %changelog
+* Thu Mar 11 2014 Jakub Libosvar <jlibosva@redhat.com> - 2013.2.2-3
+- Check whether db needs to be upgraded (rhbz#1031801 , rhbz#1045034)
+
 * Wed Feb 19 2014 Miguel Angel Ajo <majopela@redhat.com> - 2013.2.2-2
 - Update to Havana stable release 2013.2.2
 

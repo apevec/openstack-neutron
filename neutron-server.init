@@ -11,6 +11,7 @@
 
 prog=neutron
 exec="/usr/bin/$prog-server"
+dbcheck="/usr/bin/$prog-db-check"
 configs=(
     "/usr/share/$prog/$prog-dist.conf" \
     "/etc/$prog/$prog.conf" \
@@ -25,6 +26,10 @@ lockfile=/var/lock/subsys/$prog-server
 
 start() {
     [ -x $exec ] || exit 5
+
+    # Make sure database is at the currect version.
+    [ -x $dbcheck ] && $dbcheck || exit 6
+
     for config in ${configs[@]}; do
         [ -f $config ] || exit 6
     done

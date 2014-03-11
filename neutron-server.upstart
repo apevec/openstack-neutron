@@ -1,5 +1,11 @@
 description "OpenStack Neutron Server"
 
+pre-start
+    if ! /usr/bin/neutron-db-check; then
+        stop; exit 0
+    fi
+end script
+
 start on stopped rc RUNLEVEL=[2345]
 stop on runlevel [S016]
 

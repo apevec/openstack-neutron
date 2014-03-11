@@ -1022,7 +1022,7 @@ fi
 
 
 %changelog
-* Thu Mar 11 2014 Jakub Libosvar <jlibosva@redhat.com> - 2013.2.2-3
+* Tue Mar 11 2014 Jakub Libosvar <jlibosva@redhat.com> - 2013.2.2-3
 - Check whether db needs to be upgraded (rhbz#1031801 , rhbz#1045034)
 
 * Wed Feb 19 2014 Miguel Angel Ajo <majopela@redhat.com> - 2013.2.2-2

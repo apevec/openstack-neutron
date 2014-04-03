@@ -1,8 +1,12 @@
 %global release_name havana
+%global project neutron
+Source0:        http://tarballs.openstack.org/%{project}/%{project}-stable-%{release_name}.tar.gz
+%global devtag %(tar ztf %{SOURCE0} 2>/dev/null | head -1 | rev | cut -d. -f2 | rev)
+%global devrel %(tar ztf %{SOURCE0} 2>/dev/null | head -1 | rev | cut -d. -f3-5 | cut -d- -f1 | rev)
 
 Name:		openstack-neutron
-Version:	2013.2.2
-Release:	3%{?dist}
+Version:	%{devrel}
+Release:	0.1.%{devtag}%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.3.b3
 
@@ -12,7 +16,6 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -52,7 +55,7 @@ Source51:   openstack-neutron.sysconfig
 
 Source90:	neutron-dist.conf
 #
-# patches_base=2013.2.2+1
+# patches_base=gerrit/stable/havana+1
 #
 Patch0001: 0001-use-parallel-installed-versions-in-RHEL6.patch
 Patch0002: 0002-Remove-dnsmasq-version-warning.patch
@@ -419,8 +422,8 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}
-
+%setup -q -c -T
+tar --strip-components=1 -zxf %{SOURCE0}
 %patch0001 -p1
 %patch0002 -p1
 
@@ -436,6 +439,8 @@ chmod 644 neutron/plugins/cisco/README
 
 # Let's handle dependencies ourseleves
 rm -f requirements.txt
+
+sed -i 's/^Version: .*/Version: %{version}/' PKG-INFO
 
 %build
 %{__python} setup.py build
